@@ -1,11 +1,7 @@
-// Write your code on this file. Please don't change the existing code
-// unless absolutely needed.
-
-//Initial price of the burger
+// Initial price of the burger
 var wholeWheatBun = 10;
 
-//Ingredients of the burger along with the price
-// Clue: the name is same as the textcontent of the button. Will be useful later on :)
+// Ingredients of the burger along with the price
 var ingredients = {
   Patty: 80,
   Cheese: 10,
@@ -14,7 +10,7 @@ var ingredients = {
   Lettuce: 20
 };
 
-//Current state of the ingredients in the burger
+// Current state of the ingredients in the burger
 var state = {
   Patty: true,
   Cheese: true,
@@ -23,7 +19,7 @@ var state = {
   Lettuce: true
 };
 
-// This function renders the entire screen everytime the state changes accordingly
+// This function renders the entire screen every time the state changes accordingly
 function renderAll() {
   renderPatty();
   renderCheese();
@@ -35,116 +31,122 @@ function renderAll() {
   renderPrice();
 }
 
+// Render functions for each ingredient
 function renderPatty() {
   let patty = document.querySelector("#patty");
-  //you can also use getElementById
   if (state.Patty) {
-    patty.style.display = "inherit";
+    patty.style.display = "block";
   } else {
     patty.style.display = "none";
   }
 }
 
 function renderCheese() {
-  let cheese=document.querySelector("#cheese");
-  if(state.Cheese){
+  let cheese = document.querySelector("#cheese");
+  if (state.Cheese) {
     cheese.style.display = "block";
-  }else{
+  } else {
     cheese.style.display = "none";
   }
-  //Trial 1 - Change the visibility of cheese based on state by manipulating the DOM
 }
 
 function renderTomatoes() {
-  let tomatoes=document.getElementById("tomato");
-  state.Tomatoes ? tomatoes.style.display = "block" : tomatoes.style.display = "none" ;
-  //Trial 1 - Change the visibility of Tomatoes based on state by manipulating the DOM
+  let tomatoes = document.querySelector("#tomato");
+  if (state.Tomatoes) {
+    tomatoes.style.display = "block";
+  } else {
+    tomatoes.style.display = "none";
+  }
 }
 
 function renderOnions() {
-
-  let onions=document.getElementById("onion");
-  state.Onions ? onions.style.display = "block" : onions.style.display = "none" ;
-  //Trial 1 - Change the visibility of Onions based on state by manipulating the DOM
+  let onions = document.querySelector("#onion");
+  if (state.Onions) {
+    onions.style.display = "block";
+  } else {
+    onions.style.display = "none";
+  }
 }
 
 function renderLettuce() {
-  let lettuce=document.getElementById("lettuce");
-  state.Lettuce ? lettuce.style.display = "block" : lettuce.style.display = "none" ;
-  //Trial 1 - Change the visibility of Lettuce based on state by manipulating the DOM
+  let lettuce = document.querySelector("#lettuce");
+  if (state.Lettuce) {
+    lettuce.style.display = "block";
+  } else {
+    lettuce.style.display = "none";
+  }
 }
 
+// Event listeners to toggle ingredient state
 document.querySelector(".btn-patty").onclick = function () {
   state.Patty = !state.Patty;
   renderAll();
 };
 
-// Trial 2 - Setup event listener for the cheese button
-
-let cheeseBtn=document.getElementsByClassName("btn-cheese");
-cheeseBtn[0].onclick=()=>{
-  state.Cheese=!state.Cheese;
+document.querySelector(".btn-cheese").onclick = function () {
+  state.Cheese = !state.Cheese;
   renderAll();
-}
-
-// Trial 2 - Setup event listener for the tomatoes button
+};
 
 document.querySelector(".btn-tomatoes").onclick = function () {
   state.Tomatoes = !state.Tomatoes;
   renderAll();
 };
-// Trial 2 - Setup event listener for the onion button
 
 document.querySelector(".btn-onions").onclick = function () {
   state.Onions = !state.Onions;
   renderAll();
 };
 
-
-// Trial 2 - Setup event listener for the lettuce button
-
 document.querySelector(".btn-lettuce").onclick = function () {
   state.Lettuce = !state.Lettuce;
   renderAll();
 };
 
-//Challenge 1 - Add/Remove the class active to the buttons based on state
-
-function renderButtons(){
-  document.querySelector(".btn-patty").classList.toggle("active",state.Patty);
-  document.querySelector(".btn-cheese").classList.toggle("active",state.Cheese);
-  document.querySelector(".btn-tomatoes").classList.toggle("active",state.Tomatoes);
-  document.querySelector(".btn-onions").classList.toggle("active",state.Onions);
-  document.querySelector(".btn-lettuce").classList.toggle("active",state.Lettuce);
+// Challenge 1: Add/remove 'active' class to ingredient buttons
+function renderButtons() {
+  document.querySelector(".btn-patty").classList.toggle("active", state.Patty);
+  document.querySelector(".btn-cheese").classList.toggle("active", state.Cheese);
+  document.querySelector(".btn-tomatoes").classList.toggle("active", state.Tomatoes);
+  document.querySelector(".btn-onions").classList.toggle("active", state.Onions);
+  document.querySelector(".btn-lettuce").classList.toggle("active", state.Lettuce);
 }
 
-//Challenge 2 - Render only the items selected in the ingredients board based on the state
+// Challenge 2: Show only selected ingredients on the chalkboard
 
-function renderIngredientsBoard(){
-  document.getElementById("item1").style.visibility=state.Patty?"visible":"hidden";
-  document.getElementById("item2").style.visibility=state.Cheese?"visible":"hidden";
-  document.getElementById("item3").style.visibility=state.Tomatoes?"visible":"hidden";
-  document.getElementById("item4").style.visibility=state.Onions?"visible":"hidden";
-  document.getElementById("item5").style.visibility=state.Lettuce?"visible":"hidden";
+function renderIngredientsBoard() {
+
+  var chalkboard = document.querySelector(".menu-container");
+  
+  chalkboard.innerHTML = "";
+  
+  for (var ingredient in state) {
+    if (state[ingredient]) {
+      var listItem = document.createElement("p");
+      listItem.textContent = ingredient;
+      chalkboard.appendChild(listItem);
+    }
+  }
 }
 
-//Judgement 1
-//In the p element having price-details as the class, display the calculated
-//price based on ingredients
-
-let basePrice=2*wholeWheatBun;
+// Challenge 3: Display the price to the customer
 
 function renderPrice() {
-  let pattyPrice=80;
-  let cheesePrice=10;
-  let tomatoPrice=20;
-  let onionPrice=20;
-  let lettucePrice=20;
+  let basePrice = 2 * wholeWheatBun;
+  let pattyPrice = 80;
+  let cheesePrice = 10;
+  let tomatoPrice = 20;
+  let onionPrice = 20;
+  let lettucePrice = 20;
   var price = basePrice +
-    (state.Patty * pattyPrice) +
-    (state.Cheese * cheesePrice) +
-    (state.Tomatoes * tomatoPrice) + 
-    (state.Onions * onionPrice) + 
-    (state.Lettuce * lettucePrice);
+    (state.Patty ? pattyPrice : 0) +
+    (state.Cheese ? cheesePrice : 0) +
+    (state.Tomatoes ? tomatoPrice : 0) +
+    (state.Onions ? onionPrice : 0) +
+    (state.Lettuce ? lettucePrice : 0);
   document.querySelector(".price-details").innerText = "INR " + price;
 }
+
+
+// Initial rendering
+renderAll();
